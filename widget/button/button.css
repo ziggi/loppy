@@ -3,16 +3,13 @@
 }
 
 .widget__button .button {
-	display: table-cell;
-	text-align: center;
-	vertical-align: middle;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	border: 1px solid transparent;
 	padding: 0;
 	margin: 0;
-	width: 140px;
-	height: 40px;
 	font: bold 13px/100% Arial,Helvetica,'Liberation Sans',FreeSans,sans-serif;
-	line-height: 16px;
 	color: #fff;
 	border-radius: 0;
 	background-image: none;

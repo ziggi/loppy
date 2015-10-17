@@ -1,7 +1,7 @@
 document.addEventListener('appload', function() {
 	var currentElement = null;
 	var cursorOffsetLeft, cursorOffsetTop;
-	var minOffsetTop = 0;
+	var minOffsetTop = 0, maxOffsetTop = document.documentElement.clientHeight;
 	var minOffsetLeft = 0, maxOffsetLeft = document.documentElement.clientWidth;
 
 	[].forEach.call(document.querySelectorAll('.widget'), function(element) {
@@ -46,16 +46,22 @@ document.addEventListener('appload', function() {
 		// check on borders
 		var resizeOffset = currentElement.widget().resize('get');
 
-		if (newLeft < minOffsetLeft + resizeOffset) {
-			newLeft = minOffsetLeft + resizeOffset;
-		} else if (newLeft > maxOffsetLeft - currentElement.offsetWidth - resizeOffset) {
-			newLeft = maxOffsetLeft - currentElement.offsetWidth - resizeOffset;
+		var minLeft = minOffsetLeft + resizeOffset;
+		var maxLeft = maxOffsetLeft - currentElement.offsetWidth - resizeOffset;
+
+		if (newLeft < minLeft) {
+			newLeft = minLeft;
+		} else if (newLeft > maxLeft) {
+			newLeft = maxLeft;
 		}
 
-		if (newTop < minOffsetTop +  resizeOffset) {
-			newTop = minOffsetTop +  resizeOffset;
-		} else if (newTop > document.documentElement.clientHeight - currentElement.offsetHeight - resizeOffset) {
-			newTop = document.documentElement.clientHeight - currentElement.offsetHeight - resizeOffset;
+		var minTop = minOffsetTop +  resizeOffset;
+		var maxTop = maxOffsetTop - currentElement.offsetHeight - resizeOffset;
+
+		if (newTop < minTop) {
+			newTop = minTop;
+		} else if (newTop > maxTop) {
+			newTop = maxTop;
 		}
 
 		// update position
