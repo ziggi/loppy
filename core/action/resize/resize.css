@@ -1,4 +1,4 @@
-.resize-block {
+.resize {
 	position: absolute;
 	background-color: #00cae9;
 	width: 6px;
@@ -8,53 +8,53 @@
 	z-index: 10000;
 }
 
-.resize-block-n {
+.resize-n {
 	right: 50%;
 	right: calc(50% - 5px);
 	top: -7px;
 	cursor: n-resize;
 }
 
-.resize-block-e {
+.resize-e {
 	right: -7px;
 	top: 50%;
 	top: calc(50% - 5px);
 	cursor: e-resize;
 }
 
-.resize-block-s {
+.resize-s {
 	right: 50%;
 	right: calc(50% - 5px);
 	bottom: -7px;
 	cursor: s-resize;
 }
 
-.resize-block-w {
+.resize-w {
 	left: -7px;
 	top: 50%;
 	top: calc(50% - 5px);
 	cursor: w-resize;
 }
 
-.resize-block-ne {
+.resize-ne {
 	right: -7px;
 	top: -7px;
 	cursor: ne-resize;
 }
 
-.resize-block-se {
+.resize-se {
 	right: -7px;
 	bottom: -7px;
 	cursor: se-resize;
 }
 
-.resize-block-sw {
+.resize-sw {
 	left: -7px;
 	bottom: -7px;
 	cursor: sw-resize;
 }
 
-.resize-block-nw {
+.resize-nw {
 	left: -7px;
 	top: -7px;
 	cursor: nw-resize;

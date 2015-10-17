@@ -20,12 +20,12 @@ document.addEventListener('appload', function() {
 			}
 
 			TYPES[type].forEach(function(element, index) {
-				that.widget.insertAdjacentHTML('beforeend', '<div class="resize-block resize-block-' + element + '"></div>');
+				that.widget.insertAdjacentHTML('beforeend', '<div class="resize resize-' + element + '"></div>');
 			});
 
 			return true;
 		} else if (action === 'reset') {
-			[].forEach.call(document.querySelectorAll('.resize-block'), function(element) {
+			[].forEach.call(document.querySelectorAll('.resize'), function(element) {
 				element.remove();
 			});
 

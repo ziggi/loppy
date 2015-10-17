@@ -11,7 +11,7 @@ document.addEventListener('appload', function() {
 				return;
 			}
 
-			var isResizeBlock = event.target.classList.contains('resize-block');
+			var isResizeBlock = event.target.classList.contains('resize');
 			if (isResizeBlock) {
 				return;
 			}
