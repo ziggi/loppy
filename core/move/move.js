@@ -1,8 +1,7 @@
 document.addEventListener('appload', function() {
 	var currentElement = null;
 	var cursorOffsetLeft, cursorOffsetTop;
-	var minOffsetTop = 0, maxOffsetTop = document.documentElement.clientHeight;
-	var minOffsetLeft = 0, maxOffsetLeft = document.documentElement.clientWidth;
+	const minOffsetTop = 0, minOffsetLeft = 0;
 
 	[].forEach.call(document.querySelectorAll('.widget'), function(element) {
 		element.addEventListener('mousedown', function(event) {
@@ -40,12 +39,16 @@ document.addEventListener('appload', function() {
 			return;
 		}
 
+		// vars
+		var maxOffsetTop = document.documentElement.clientHeight;
+		var maxOffsetLeft = document.documentElement.clientWidth;
+
 		var newLeft = event.pageX - cursorOffsetLeft;
 		var newTop = event.pageY - cursorOffsetTop;
 
-		// check on borders
 		var resizeOffset = currentElement.widget().resize('get');
 
+		// check on borders
 		var minLeft = minOffsetLeft + resizeOffset;
 		var maxLeft = maxOffsetLeft - currentElement.offsetWidth - resizeOffset;
 
