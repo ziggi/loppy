@@ -1,0 +1,24 @@
+{
+  "name": "loppy",
+  "authors": [
+    "Sergei Marochkin <me@ziggi.org>"
+  ],
+  "description": "Landing Page Builder",
+  "main": "index.html",
+  "moduleType": [
+    "amd"
+  ],
+  "license": "MIT",
+  "homepage": "loppy.ziggi.org",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "vendor"
+  ],
+  "dependencies": {
+    "requirejs": "^2.1.22"
+  }
+}

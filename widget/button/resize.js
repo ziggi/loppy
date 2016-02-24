@@ -1,30 +1,34 @@
-document.addEventListener('appload', function() {
+define(['core/widget/widget', 'core/resize/resize', 'css!widget/button/button.css'], function(widget, resize) {
 	const BUTTON_WIDTH_MIN = 70;
 	const BUTTON_HEIGHT_MIN = 30;
 	const FONT_SIZE_RATIO = 0.4;
 
 	var currentElement = null;
-	var currentResize = null;
+	var currentResizeElement = null;
 
-	[].forEach.call(document.querySelectorAll('.widget'), function(element) {
-		element.addEventListener('widget__active', function() {
-			this.widget().resize('init', 'all');
+	widget.getAll('button').forEach(function(element) {
+		element.addEventListener('widgetActive', function() {
+			resize.set(widget.get(element), 'all');
 
-			[].forEach.call(document.querySelectorAll('.resize'), function(resize) {
-				resize.addEventListener('mousedown', function() {
+			resize.getControls(element).forEach(function(resizeElement) {
+				resizeElement.addEventListener('mousedown', function() {
 					currentElement = element;
-					currentResize = resize;
+					currentResizeElement = resizeElement;
 				});
 			});
+		});
+
+		element.addEventListener('widgetInactive', function() {
+			resize.remove(widget.get(element));
 		});
 	});
 
 	document.addEventListener('mousemove', function(event) {
-		if (currentElement === null || currentResize === null) {
+		if (currentElement === null || currentResizeElement === null) {
 			return;
 		}
 
-		var resizeOffset = currentElement.widget().resize('get');
+		var resizeOffset = resize.getOffset();
 
 		var currentStyle = window.getComputedStyle(currentElement, null);
 		var currentHeight = parseInt(currentStyle.getPropertyValue('height'));
@@ -34,21 +38,12 @@ document.addEventListener('appload', function() {
 		var maxOffsetLeft = document.documentElement.clientWidth;
 		var newTop, newLeft, newHeight = currentHeight, newWidth = currentWidth;
 
-		var isVerticalTop = ['resize-n', 'resize-nw', 'resize-ne'].some(function(c) {
-			return currentResize.classList.contains(c);
-		});
+		var controlType = resize.getControlType(currentResizeElement);
 
-		var isVerticalBottom = ['resize-s', 'resize-sw', 'resize-se'].some(function(c) {
-			return currentResize.classList.contains(c);
-		});
-
-		var isHorizontalLeft = ['resize-w', 'resize-sw', 'resize-nw'].some(function(c) {
-			return currentResize.classList.contains(c);
-		});
-
-		var isHorizontalRight = ['resize-e', 'resize-se', 'resize-ne'].some(function(c) {
-			return currentResize.classList.contains(c);
-		});
+		var isVerticalTop = ['n', 'nw', 'ne'].some(c => c == controlType);
+		var isVerticalBottom = ['s', 'sw', 'se'].some(c => c == controlType);
+		var isHorizontalLeft = ['w', 'sw', 'nw'].some(c => c == controlType);
+		var isHorizontalRight = ['e', 'se', 'ne'].some(c => c == controlType);
 
 		if (isVerticalTop) {
 			newHeight = currentElement.offsetTop - event.pageY + currentHeight;
@@ -126,6 +121,6 @@ document.addEventListener('appload', function() {
 
 	document.addEventListener('mouseup', function(event) {
 		currentElement = null;
-		currentResize = null;
+		currentResizeElement = null;
 	});
 });

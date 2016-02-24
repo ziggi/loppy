@@ -1,41 +1,35 @@
-document.addEventListener('appload', function() {
-	var currentElement = null;
+define(['core/widget/widget', 'core/resize/resize', 'css!core/move/move.css'], function(widget, resize) {
 	var cursorOffsetLeft, cursorOffsetTop;
 	const minOffsetTop = 0, minOffsetLeft = 0;
 
-	[].forEach.call(document.querySelectorAll('.widget'), function(element) {
+	widget.getAll().forEach(function(element) {
 		element.addEventListener('mousedown', function(event) {
 			var isNotLeftClick = event.which !== 1;
 			if (isNotLeftClick) {
 				return;
 			}
 
-			var isResizeBlock = event.target.classList.contains('resize');
-			if (isResizeBlock) {
+			if (resize.isControl(event.target)) {
 				return;
 			}
 
 			cursorOffsetLeft = event.pageX - element.offsetLeft;
 			cursorOffsetTop = event.pageY - element.offsetTop;
 
-			currentElement = element;
-			currentElement.classList.add('move');
-			currentElement.querySelector('.widget__item').classList.add('move');
+			widget.setMove(element);
 		});
 	});
 
 	document.addEventListener('mouseup', function() {
-		if (currentElement === null) {
+		if (widget.getMove() === null) {
 			return;
 		}
 
-		currentElement.classList.remove('move');
-		currentElement.querySelector('.widget__item').classList.remove('move');
-		currentElement = null;
+		widget.removeMove();
 	});
 
 	document.addEventListener('mousemove', function(event) {
-		if (currentElement === null) {
+		if (widget.getMove() === null) {
 			return;
 		}
 
@@ -46,11 +40,11 @@ document.addEventListener('appload', function() {
 		var newLeft = event.pageX - cursorOffsetLeft;
 		var newTop = event.pageY - cursorOffsetTop;
 
-		var resizeOffset = currentElement.widget().resize('get');
+		var resizeOffset = resize.getOffset(widget.getMove());
 
 		// check on borders
 		var minLeft = minOffsetLeft + resizeOffset;
-		var maxLeft = maxOffsetLeft - currentElement.offsetWidth - resizeOffset;
+		var maxLeft = maxOffsetLeft - widget.getMove().offsetWidth - resizeOffset;
 
 		if (newLeft < minLeft) {
 			newLeft = minLeft;
@@ -59,7 +53,7 @@ document.addEventListener('appload', function() {
 		}
 
 		var minTop = minOffsetTop +  resizeOffset;
-		var maxTop = maxOffsetTop - currentElement.offsetHeight - resizeOffset;
+		var maxTop = maxOffsetTop - widget.getMove().offsetHeight - resizeOffset;
 
 		if (newTop < minTop) {
 			newTop = minTop;
@@ -68,7 +62,7 @@ document.addEventListener('appload', function() {
 		}
 
 		// update position
-		currentElement.style.left = newLeft + 'px';
-		currentElement.style.top = newTop + 'px';
+		widget.getMove().style.left = newLeft + 'px';
+		widget.getMove().style.top = newTop + 'px';
 	});
 });

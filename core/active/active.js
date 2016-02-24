@@ -1,33 +1,22 @@
-document.addEventListener('appload', function() {
-	[].forEach.call(document.querySelectorAll('.widget'), function(element) {
+define(['core/widget/widget', 'core/resize/resize', 'css!core/active/active.css'], function(widget, resize) {
+	widget.getAll().forEach(function(element) {
 		element.addEventListener('mousedown', function() {
-			widgetSetActive(true, element);
+			widget.setActive(element);
 		});
 	});
 
 	document.addEventListener('mousedown', function(event) {
 		// is widget
-		if (event.target.classList.contains('widget') || event.target.parents('.widget').length !== 0) {
+		if (widget.isValid(event.target)) {
 			return;
 		}
 
 		// is resize controls
-		if (event.target.classList.contains('resize')) {
+		if (resize.isValid(event.target)) {
 			return;
 		}
 
 		// dispatch event
-		widgetSetActive(false);
+		widget.removeActive();
 	});
-
-	function widgetSetActive(setActive, widget) {
-		var activeWidget = document.querySelector('.widget__active');
-		if (activeWidget !== null) {
-			activeWidget.dispatchEvent(new Event('widget__inactive'));
-		}
-
-		if (setActive) {
-			widget.dispatchEvent(new Event('widget__active'));
-		}
-	}
 });

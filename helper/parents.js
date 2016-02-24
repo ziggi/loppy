@@ -1,7 +1,6 @@
-window.addEventListener('load', function() {
-	Element.prototype.parents = function(selector) {
+define(function() {
+	return function(elem, selector) {
 		var elements = [];
-		var elem = this;
 		var ishaveselector = selector !== undefined;
 
 		while ((elem = elem.parentElement) !== null) {
