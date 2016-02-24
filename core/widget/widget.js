@@ -21,7 +21,7 @@ define(['helper/parents', 'css!core/widget/widget.css'], function(parents) {
 			widgets.remove(element);
 		},
 		isValid: function(element) {
-			var parent = parents(event.target, '.widget');
+			var parent = parents(element, '.widget');
 			return widgets.indexOf(element) != -1 || parent.some(elem => widgets.indexOf(elem) != -1);
 		},
 		getAll: function(type) {
