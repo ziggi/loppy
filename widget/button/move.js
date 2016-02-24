@@ -1,4 +1,4 @@
-define(['core/widget/widget', 'core/move/move'], function(widget, move) {
+define(['core/widget/widget', 'core/move/move', 'core/move/move_action'], function(widget, move) {
 	widget.getAll('button').forEach(function(element) {
 		element.addEventListener('widgetMoveStop', function() {
 			this.classList.remove('widget__move');

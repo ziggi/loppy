@@ -1,6 +1,7 @@
 define(['core/widget/widget'], function(widget) {
 	widget.add(document.querySelector('.widget'));
-	require(['widget/button/resize']);
+	
 	require(['widget/button/active']);
-	require(['core/move/move']);
+	require(['widget/button/move']);
+	require(['widget/button/resize']);
 });

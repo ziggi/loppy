@@ -30,42 +30,6 @@ define(['helper/parents', 'css!core/widget/widget.css'], function(parents) {
 			}
 
 			return widgets.filter(elem => elem.querySelector('.' + type) != null);
-		},
-		// widget active
-		setActive: function(element) {
-			element.dispatchEvent(new Event('widgetActive'));
-			activeElement = element;
-		},
-		getActive: function() {
-			return activeElement;
-		},
-		isActive: function(element) {
-			return activeElement === element;
-		},
-		removeActive: function() {
-			if (activeElement != null) {
-				activeElement.dispatchEvent(new Event('widgetInactive'));	
-			}
-			
-			activeElement = null;
-		},
-		// widget move
-		setMove: function(element) {
-			element.dispatchEvent(new Event('widgetMoveStart'));
-			moveElement = element;
-		},
-		getMove: function() {
-			return moveElement;
-		},
-		isMove: function(element) {
-			return moveElement == element;
-		},
-		removeMove: function() {
-			if (moveElement != null) {
-				moveElement.dispatchEvent(new Event('widgetMoveStop'));	
-			}
-			
-			moveElement = null;
-		},
+		}
 	};
 });

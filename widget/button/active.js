@@ -1,4 +1,4 @@
-define(['core/widget/widget', 'core/active/active'], function(widget, active) {
+define(['core/widget/widget', 'core/active/active', 'core/active/active_action'], function(widget, active) {
 	widget.getAll('button').forEach(function(element) {
 		element.addEventListener('widgetInactive', function() {
 			this.classList.remove('widget__active');

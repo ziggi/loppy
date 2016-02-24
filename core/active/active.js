@@ -1,22 +1,23 @@
-define(['core/widget/widget', 'core/resize/resize', 'css!core/active/active.css'], function(widget, resize) {
-	widget.getAll().forEach(function(element) {
-		element.addEventListener('mousedown', function() {
-			widget.setActive(element);
-		});
-	});
+define(['css!core/active/active.css'], function() {
+	var activeWidget = null;
 
-	document.addEventListener('mousedown', function(event) {
-		// is widget
-		if (widget.isValid(event.target)) {
-			return;
+	return {
+		set: function(widget) {
+			widget.dispatchEvent(new Event('widgetActive'));
+			activeWidget = widget;
+		},
+		get: function() {
+			return activeWidget;
+		},
+		isValid: function(widget) {
+			return activeWidget === widget;
+		},
+		remove: function() {
+			if (activeWidget != null) {
+				activeWidget.dispatchEvent(new Event('widgetInactive'));	
+			}
+			
+			activeWidget = null;
 		}
-
-		// is resize controls
-		if (resize.isValid(event.target)) {
-			return;
-		}
-
-		// dispatch event
-		widget.removeActive();
-	});
+	};
 });

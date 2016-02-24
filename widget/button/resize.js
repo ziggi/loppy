@@ -11,7 +11,12 @@ define(['core/widget/widget', 'core/resize/resize', 'css!widget/button/button.cs
 			resize.set(widget.get(element), 'all');
 
 			resize.getControls(element).forEach(function(resizeElement) {
-				resizeElement.addEventListener('mousedown', function() {
+				resizeElement.addEventListener('mousedown', function(event) {
+					var isNotLeftClick = event.which !== 1;
+					if (isNotLeftClick) {
+						return;
+					}
+					
 					currentElement = element;
 					currentResizeElement = resizeElement;
 				});

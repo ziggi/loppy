@@ -1,4 +1,4 @@
-define(['core/widget/widget', 'css!core/resize/resize.css'], function(widget) {
+define(['css!core/resize/resize.css'], function() {
 	const DEFAULT_TYPE = 'all';
 	const TYPES = {
 		all: ['n', 'e', 's', 'w', 'ne', 'se', 'sw', 'nw'],
