@@ -1,7 +1,9 @@
 define(['core/widget/widget'], function(widget) {
-	widget.add(document.querySelector('.widget'));
+	var widgets = document.querySelectorAll('.widget');
+
+	widgets.forEach(function(w) {
+		widget.add({element: w, type: 'button'});
+	});
 	
-	require(['widget/button/active']);
-	require(['widget/button/move']);
-	require(['widget/button/resize']);
+	require(['widget/button/button']);
 });

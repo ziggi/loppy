@@ -1,23 +1,46 @@
 define(['core/widget/widget', 'css!core/move/move.css'], function(widget) {
-	var moveWidget = null;
+	var
+		currentWidget = null,
+		enabledWidgets = [];
 
 	return {
 		set: function(widget) {
-			widget.dispatchEvent(new Event('widgetMoveStart'));
-			moveWidget = widget;
+			widget.element.dispatchEvent(new Event('widgetMoveStart'));
+			currentWidget = widget;
 		},
 		get: function() {
-			return moveWidget;
+			return currentWidget;
 		},
 		isValid: function(widget) {
-			return moveWidget == widget;
+			return currentWidget == widget;
 		},
 		remove: function() {
-			if (moveWidget != null) {
-				moveWidget.dispatchEvent(new Event('widgetMoveStop'));	
+			if (currentWidget != null) {
+				currentWidget.element.dispatchEvent(new Event('widgetMoveStop'));	
 			}
 			
-			moveWidget = null;
+			currentWidget = null;
+		},
+		// movable
+		enable: function(widget) {
+			if (Array.isArray(widget)) {
+				enabledWidgets = enabledWidgets.concat(widget);
+			} else {
+				enabledWidgets.push(widget);
+			}
+		},
+		disable: function(widget) {
+			if (Array.isArray(widget)) {
+				enabledWidgets = enabledWidgets.filter(w => widget.indexOf(w) === -1);
+			} else {
+				var index = enabledWidgets.indexOf(widget);
+				if (index != -1) {
+					currentWidget.splice(index, 1);	
+				}
+			}
+		},
+		isEnabled: function(widget) {
+			return enabledWidgets.indexOf(widget) != -1;
 		}
 	};
 });

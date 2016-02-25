@@ -2,10 +2,14 @@ define(['core/widget/widget', 'core/resize/resize', 'core/move/move'], function(
 	var cursorOffsetLeft, cursorOffsetTop;
 	const minOffsetTop = 0, minOffsetLeft = 0;
 
-	widget.getAll().forEach(function(element) {
-		element.addEventListener('mousedown', function(event) {
+	widget.getAll().forEach(function(widget) {
+		widget.element.addEventListener('mousedown', function(event) {
 			var isNotLeftClick = event.which !== 1;
 			if (isNotLeftClick) {
+				return;
+			}
+
+			if (!move.isEnabled(widget)) {
 				return;
 			}
 
@@ -13,10 +17,10 @@ define(['core/widget/widget', 'core/resize/resize', 'core/move/move'], function(
 				return;
 			}
 
-			cursorOffsetLeft = event.pageX - element.offsetLeft;
-			cursorOffsetTop = event.pageY - element.offsetTop;
+			cursorOffsetLeft = event.pageX - widget.element.offsetLeft;
+			cursorOffsetTop = event.pageY - widget.element.offsetTop;
 
-			move.set(element);
+			move.set(widget);
 		});
 	});
 
@@ -62,7 +66,7 @@ define(['core/widget/widget', 'core/resize/resize', 'core/move/move'], function(
 		}
 
 		// update position
-		move.get().style.left = newLeft + 'px';
-		move.get().style.top = newTop + 'px';
+		move.get().element.style.left = newLeft + 'px';
+		move.get().element.style.top = newTop + 'px';
 	});
 });

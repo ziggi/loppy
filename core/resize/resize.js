@@ -7,21 +7,43 @@ define(['css!core/resize/resize.css'], function() {
 	};
 	const OFFSET_SIZE = 7;
 
-	var resizeWidgets = [];
+	var
+		currentWidget = null,
+		enabledWidgets = [];
 
 	return {
+		set: function(widget, type) {
+			widget.dispatchEvent(new Event('widgetResizeStart'));
+			currentWidget = widget;
+		},
+		get: function() {
+			return currentWidget;
+		},
+		isValid: function(widget) {
+			return currentWidget == widget;
+		},
+		remove: function() {
+			if (currentWidget != null) {
+				currentWidget.dispatchEvent(new Event('widgetResizeStop'));	
+			}
+			
+			currentWidget = null;
+			[].forEach.call(document.querySelectorAll('.resize'), function(elem) {
+				elem.remove();
+			});
+		},
 		// offset
 		getOffset: function() {
 			return OFFSET_SIZE;
 		},
 		// resize
-		isValid: function(widget) {
+		/*isValid: function(widget) {
 			return this.get(widget) != -1;
 		},
 		remove: function(widget) {
 			var index = this.get(widget);
 			if (index != -1) {
-				resizeWidgets.splice(index, 1);	
+				currentWidget.splice(index, 1);	
 			}
 
 			[].forEach.call(document.querySelectorAll('.resize'), function(elem) {
@@ -29,17 +51,17 @@ define(['css!core/resize/resize.css'], function() {
 			});
 		},
 		get: function(widget) {
-			return resizeWidgets.indexOf(widget);
+			return currentWidget.indexOf(widget);
 		},
 		getAll: function() {
-			return resizeWidgets;
+			return currentWidget;
 		},
 		set: function(widget, type) {
 			if (this.isValid(widget)) {
 				return false;
 			}
 
-			resizeWidgets.push(widget);
+			currentWidget.push(widget);
 
 			if (type === undefined) {
 				type = DEFAULT_TYPE;
@@ -54,6 +76,30 @@ define(['css!core/resize/resize.css'], function() {
 			});
 
 			return true;
+		},*/
+		// resizeable
+		enable: function(widget, params) {
+			if (Array.isArray(widget)) {
+				enabledWidgets = enabledWidgets.concat(widget);
+			} else {
+				enabledWidgets.push({
+					widget: widget,
+					params: params
+				});
+			}
+		},
+		disable: function(widget) {
+			if (Array.isArray(widget)) {
+				enabledWidgets = enabledWidgets.filter(w => widget.indexOf(w) === -1);
+			} else {
+				var index = enabledWidgets.indexOf(widget);
+				if (index != -1) {
+					currentWidget.splice(index, 1);	
+				}
+			}
+		},
+		isEnabled: function(widget) {
+			return enabledWidgets.indexOf(widget) != -1;
 		},
 		// controls
 		isControl: function(element) {
@@ -64,6 +110,6 @@ define(['css!core/resize/resize.css'], function() {
 		},
 		getControlType: function(controlElement) {
 			return TYPES['all'].filter(e => controlElement.classList.contains('resize-' + e));
-		},
+		}
 	};
 });

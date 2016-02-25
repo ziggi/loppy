@@ -1,27 +1,30 @@
 define(['core/widget/widget', 'core/active/active', 'core/resize/resize'], function(widget, active, resize) {
-	widget.getAll().forEach(function(element) {
+	widget.getAllElements().forEach(function(element) {
 		element.addEventListener('mousedown', function(event) {
 			var isNotLeftClick = event.which !== 1;
 			if (isNotLeftClick) {
 				return;
 			}
 
-			active.set(widget.get(element));
+			var w = widget.find({element: element})[0];
+
+			if (!active.isEnabled(w)) {
+				return;
+			}
+
+			active.set(w);
 		});
 	});
 
 	document.addEventListener('mousedown', function(event) {
-		// is widget
 		if (widget.isValid(event.target)) {
 			return;
 		}
 
-		// is resize controls
 		if (resize.isValid(event.target)) {
 			return;
 		}
 
-		// dispatch event
 		active.remove();
 	});
 });

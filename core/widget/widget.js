@@ -1,35 +1,65 @@
 define(['helper/parents', 'css!core/widget/widget.css'], function(parents) {
 	var
 		widgets = [];
-		activeElement = null,
-		moveElement = null;
 
 	return {
-		// widget
-		add: function(element) {
-			widgets.push(element);
-		},
-		get: function(element) {
-			var index = widgets.indexOf(element);
-			if (index != -1) {
-				return widgets[index];	
-			}
+			add: function(params) {
+				widgets.push(params);
+			},
+			get: function(index) {
+				return widgets[index];
+			},
+			getCount: function() {
+				return widgets.length;
+			},
+			isValid: function(element) {
+				var parent = parents(element, '.widget');
+				return this.find({element: element}).length > 0 || parent.some(elem => this.find({element: elem}).length > 0);
+			},
+			getAllElements: function(type) {
+				var elements = [];
 
-			return null;
-		},
-		remove: function(element) {
-			widgets.remove(element);
-		},
-		isValid: function(element) {
-			var parent = parents(element, '.widget');
-			return widgets.indexOf(element) != -1 || parent.some(elem => widgets.indexOf(elem) != -1);
-		},
-		getAll: function(type) {
-			if (type === undefined) {
+				if (type === undefined) {
+					widgets.forEach(w => elements.push(w.element));
+				} else {
+					this.find({type: type}).forEach(w => elements.push(w.element));
+				}
+
+				return elements;
+			},
+			getAll: function() {
 				return widgets;
-			}
+			},
+			find: function(params) {
+				var
+					isNotFinded = false,
+					result = [];
 
-			return widgets.filter(elem => elem.querySelector('.' + type) != null);
-		}
-	};
+				widgets.forEach(function(w, index) {
+					for (var p in params) {
+						if (!params.hasOwnProperty(p)) {
+							continue;
+						}
+
+						if (!w.hasOwnProperty(p)) {
+							isNotFinded = true;
+							break;
+						}
+
+						if (params[p] !== w[p]) {
+							isNotFinded = true;
+							break;
+						}
+					}
+
+					if (!isNotFinded) {
+						result.push(w);
+					}
+					
+					isNotFinded = false;
+				});
+
+				return result;
+			}
+		};
 });
