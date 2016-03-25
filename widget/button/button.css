@@ -1,5 +1,9 @@
 .widget__button {
 	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 .widget__button .button {
@@ -16,8 +20,4 @@
 	background-color: rgb(0, 102, 204);
 	text-decoration: none;
 	box-sizing: border-box;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
 }

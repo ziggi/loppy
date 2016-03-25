@@ -5,6 +5,14 @@ define(['css!core/active/active.css'], function() {
 
 	return {
 		set: function(widget) {
+			if (currentWidget === widget) {
+				return;
+			}
+
+			if (currentWidget !== null ) {
+				this.remove();
+			}
+
 			widget.element.dispatchEvent(new Event('widgetActive'));
 			currentWidget = widget;
 		},
@@ -15,10 +23,11 @@ define(['css!core/active/active.css'], function() {
 			return currentWidget === widget;
 		},
 		remove: function() {
-			if (currentWidget != null) {
-				currentWidget.element.dispatchEvent(new Event('widgetInactive'));	
+			if (currentWidget === null) {
+				return;
 			}
-			
+
+			currentWidget.element.dispatchEvent(new Event('widgetInactive'));
 			currentWidget = null;
 		},
 		// activable
@@ -35,7 +44,7 @@ define(['css!core/active/active.css'], function() {
 			} else {
 				var index = enabledWidgets.indexOf(widget);
 				if (index != -1) {
-					currentWidget.splice(index, 1);	
+					currentWidget.splice(index, 1);
 				}
 			}
 		},

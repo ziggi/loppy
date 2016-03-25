@@ -5,6 +5,14 @@ define(['core/widget/widget', 'css!core/move/move.css'], function(widget) {
 
 	return {
 		set: function(widget) {
+			if (currentWidget === widget) {
+				return;
+			}
+
+			if (currentWidget !== null ) {
+				this.remove();
+			}
+
 			widget.element.dispatchEvent(new Event('widgetMoveStart'));
 			currentWidget = widget;
 		},
@@ -15,10 +23,11 @@ define(['core/widget/widget', 'css!core/move/move.css'], function(widget) {
 			return currentWidget == widget;
 		},
 		remove: function() {
-			if (currentWidget != null) {
-				currentWidget.element.dispatchEvent(new Event('widgetMoveStop'));	
+			if (currentWidget === null) {
+				return;
 			}
-			
+
+			currentWidget.element.dispatchEvent(new Event('widgetMoveStop'));
 			currentWidget = null;
 		},
 		// movable
@@ -35,7 +44,7 @@ define(['core/widget/widget', 'css!core/move/move.css'], function(widget) {
 			} else {
 				var index = enabledWidgets.indexOf(widget);
 				if (index != -1) {
-					currentWidget.splice(index, 1);	
+					currentWidget.splice(index, 1);
 				}
 			}
 		},

@@ -1,26 +1,31 @@
-define(['core/widget/widget', 'core/resize/resize', 'core/move/move'], function(widget, resize, move) {
-	var cursorOffsetLeft, cursorOffsetTop;
-	const minOffsetTop = 0, minOffsetLeft = 0;
+define(['core/widget/widget', 'core/resize/resize_control', 'core/move/move'], function(widget, resizeControl, move) {
+	const
+		MIN_OFFSET_TOP = 0,
+		MIN_OFFSET_LEFT = 0;
 
-	widget.getAll().forEach(function(widget) {
-		widget.element.addEventListener('mousedown', function(event) {
+	var
+		cursorOffsetLeft,
+		cursorOffsetTop;
+
+	widget.getAll().forEach(function(w) {
+		w.element.addEventListener('mousedown', function(event) {
 			var isNotLeftClick = event.which !== 1;
 			if (isNotLeftClick) {
 				return;
 			}
 
-			if (!move.isEnabled(widget)) {
+			if (!move.isEnabled(w)) {
 				return;
 			}
 
-			if (resize.isControl(event.target)) {
+			if (resizeControl.isValid(event.target)) {
 				return;
 			}
 
-			cursorOffsetLeft = event.pageX - widget.element.offsetLeft;
-			cursorOffsetTop = event.pageY - widget.element.offsetTop;
+			cursorOffsetLeft = event.pageX - w.element.offsetLeft;
+			cursorOffsetTop = event.pageY - w.element.offsetTop;
 
-			move.set(widget);
+			move.set(w);
 		});
 	});
 
@@ -33,7 +38,8 @@ define(['core/widget/widget', 'core/resize/resize', 'core/move/move'], function(
 	});
 
 	document.addEventListener('mousemove', function(event) {
-		if (move.get() === null) {
+		var w = move.get();
+		if (w === null) {
 			return;
 		}
 
@@ -44,11 +50,11 @@ define(['core/widget/widget', 'core/resize/resize', 'core/move/move'], function(
 		var newLeft = event.pageX - cursorOffsetLeft;
 		var newTop = event.pageY - cursorOffsetTop;
 
-		var resizeOffset = resize.getOffset(move.get());
+		var resizeOffset = resizeControl.getOffset(w);
 
 		// check on borders
-		var minLeft = minOffsetLeft + resizeOffset;
-		var maxLeft = maxOffsetLeft - move.get().offsetWidth - resizeOffset;
+		var minLeft = MIN_OFFSET_LEFT + resizeOffset;
+		var maxLeft = maxOffsetLeft - w.element.offsetWidth - resizeOffset;
 
 		if (newLeft < minLeft) {
 			newLeft = minLeft;
@@ -56,8 +62,8 @@ define(['core/widget/widget', 'core/resize/resize', 'core/move/move'], function(
 			newLeft = maxLeft;
 		}
 
-		var minTop = minOffsetTop +  resizeOffset;
-		var maxTop = maxOffsetTop - move.get().offsetHeight - resizeOffset;
+		var minTop = MIN_OFFSET_TOP +  resizeOffset;
+		var maxTop = maxOffsetTop - w.element.offsetHeight - resizeOffset;
 
 		if (newTop < minTop) {
 			newTop = minTop;
@@ -66,7 +72,7 @@ define(['core/widget/widget', 'core/resize/resize', 'core/move/move'], function(
 		}
 
 		// update position
-		move.get().element.style.left = newLeft + 'px';
-		move.get().element.style.top = newTop + 'px';
+		w.element.style.left = newLeft + 'px';
+		w.element.style.top = newTop + 'px';
 	});
 });

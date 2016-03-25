@@ -55,7 +55,7 @@ define(['helper/parents', 'css!core/widget/widget.css'], function(parents) {
 					if (!isNotFinded) {
 						result.push(w);
 					}
-					
+
 					isNotFinded = false;
 				});
 
