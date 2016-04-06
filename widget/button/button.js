@@ -16,11 +16,11 @@ define(['core/widget/widget',
 	active.enable(buttonWidgets);
 
 	widget.getAllElements('button').forEach(function(element) {
-		element.addEventListener('widgetInactive', function() {
+		element.addEventListener('widgetActiveRemove', function() {
 			this.classList.remove('widget__active');
 		});
 
-		element.addEventListener('widgetActive', function() {
+		element.addEventListener('widgetActiveSet', function() {
 			this.classList.add('widget__active');
 		});
 	});

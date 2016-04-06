@@ -1,13 +1,14 @@
 define(['core/widget/widget', 'core/resize/resize', 'core/resize/resize_control'], function(widget, resize, resizeControl) {
 	widget.getAll().forEach(function(w) {
-		w.element.addEventListener('widgetActive', function(event) {
+		w.element.addEventListener('widgetActiveSet', function(event) {
 			if (!resize.isEnabled(w)) {
 				return;
 			}
 
-			resize.set(w, resize.getParams(w).type);
+			var type = resize.getParams(w).type;
+			resize.set(w, type);
 
-			resizeControl.getNames(resize.getParams(w).type).forEach(function(name) {
+			resizeControl.getNames(type).forEach(function(name) {
 				w.element.insertAdjacentHTML('beforeend', '<div class="resize resize-' + name + '"></div>');
 			});
 
@@ -23,7 +24,7 @@ define(['core/widget/widget', 'core/resize/resize', 'core/resize/resize_control'
 			});
 		});
 
-		w.element.addEventListener('widgetInactive', function() {
+		w.element.addEventListener('widgetActiveRemove', function() {
 			resizeControl.getElements(this).forEach(function(resizeElement) {
 				resizeElement.remove();
 			});

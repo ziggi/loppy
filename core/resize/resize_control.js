@@ -3,7 +3,8 @@ define(['core/widget/widget', 'core/resize/resize'], function(widget, resize) {
 	const TYPES = {
 		all: ['n', 'e', 's', 'w', 'ne', 'se', 'sw', 'nw'],
 		side: ['w', 'e'],
-		popup: ['w', 'e', 'n', 's']
+		exside: ['w', 'e', 'n', 's'],
+		corner: ['ne', 'se', 'sw', 'nw']
 	};
 	const OFFSET_SIZE = 7;
 
@@ -12,7 +13,7 @@ define(['core/widget/widget', 'core/resize/resize'], function(widget, resize) {
 
 	return {
 		set: function(element) {
-			element.dispatchEvent(new Event('widgetResizeControlStart'));
+			element.dispatchEvent(new Event('widgetResizeControlSet'));
 			currentElement = element;
 		},
 		get: function() {
@@ -26,7 +27,7 @@ define(['core/widget/widget', 'core/resize/resize'], function(widget, resize) {
 				return
 			}
 
-			currentElement.dispatchEvent(new Event('widgetResizeControlStop'));
+			currentElement.dispatchEvent(new Event('widgetResizeControlRemove'));
 			currentElement = null;
 		},
 		getOffset: function() {
