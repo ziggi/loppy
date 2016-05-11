@@ -74,5 +74,8 @@ define(['core/widget/widget', 'core/resize/resize_control', 'core/move/move'], f
 		// update position
 		w.element.style.left = newLeft + 'px';
 		w.element.style.top = newTop + 'px';
+
+		// call event
+		move.process(w);
 	});
 });

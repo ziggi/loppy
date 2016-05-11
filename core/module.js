@@ -31,6 +31,13 @@ define(function () {
 				currentWidget.element.dispatchEvent(new Event('widget' + widgetName + 'Remove'));
 				currentWidget = null;
 			},
+			process: function() {
+				if (currentWidget === null) {
+					return;
+				}
+
+				currentWidget.element.dispatchEvent(new Event('widget' + widgetName + 'Process'));
+			},
 			// activable
 			enable: function(widget, params) {
 				if (Array.isArray(widget)) {

@@ -6,14 +6,17 @@ define(['core/widget/widget',
         'css!widget/button/button.css',
         'core/resize/resize',
         'core/resize/resize_action',
-        'core/resize/resize_control'
-	], function(widget, move, _, active, _, _, resize, _, _) {
+        'core/resize/resize_control',
+        'core/guide/guide',
+        'core/guide/guide_action'
+	], function(widget, move, _, active, _, _, resize, _, _, guide, _) {
 
 	var buttonWidgets = widget.find({type: 'button'});
 
 	move.enable(buttonWidgets);
 	resize.enable(buttonWidgets, {minWidth: 70, minHeight: 30, fontSizeRation: 0.4, type: 'all'});
 	active.enable(buttonWidgets);
+	guide.enable(buttonWidgets);
 
 	widget.getAllElements('button').forEach(function(element) {
 		element.addEventListener('widgetActiveRemove', function() {

@@ -1,0 +1,16 @@
+.guide {
+	position: fixed;
+	display: none;
+	z-index: 10000;
+	background-color: #0f0;
+}
+
+.guide_vertical {
+	height: 100%;
+	width: 1px;
+}
+
+.guide_horizontal {
+	height: 1px;
+	width: 100%;
+}

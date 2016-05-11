@@ -1,4 +1,4 @@
-define(['core/widget/widget', 'core/active/active', 'core/resize/resize_control'], function(widget, active, resizeControl) {
+define(['core/widget/widget', 'core/active/active'], function(widget, active) {
 	widget.getAll().forEach(function(w) {
 		w.element.addEventListener('mousedown', function(event) {
 			var isNotLeftClick = event.which !== 1;
