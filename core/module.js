@@ -10,7 +10,7 @@ define(function () {
 					return;
 				}
 
-				if (currentWidget !== null ) {
+				if (currentWidget !== null) {
 					this.remove();
 				}
 

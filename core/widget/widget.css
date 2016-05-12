@@ -1,8 +1,8 @@
 .widget {
 	position: absolute;
+	padding: 1px;
 	border: 1px solid #fff;
 	border-color: transparent;
-	padding: 1px;
 }
 
 .widget__inner {

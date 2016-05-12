@@ -1,16 +1,18 @@
-define(['core/widget/widget',
-        'core/move/move',
-        'core/move/move_action',
-        'core/active/active',
-        'core/active/active_action',
-        'css!widget/button/button.css',
-        'core/resize/resize',
-        'core/resize/resize_action',
-        'core/resize/resize_control',
-        'core/guide/guide',
-        'core/guide/guide_action'
-	], function(widget, move, _, active, _, _, resize, _, _, guide, _) {
+define(function(require) {
+	// load modules
+	var widget = require('core/widget/widget');
+	var move = require('core/move/move');
+	require('core/move/move_action');
+	var active = require('core/active/active');
+	require('core/active/active_action');
+	require('css!widget/button/button.css');
+	var resize = require('core/resize/resize');
+	require('core/resize/resize_action');
+	require('core/resize/resize_control');
+	var guide = require('core/guide/guide');
+	require('core/guide/guide_action');
 
+	// button
 	var buttonWidgets = widget.find({type: 'button'});
 
 	move.enable(buttonWidgets);

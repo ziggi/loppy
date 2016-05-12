@@ -5,12 +5,12 @@
 	background-color: #0f0;
 }
 
-.guide_vertical {
+.guide__vertical {
 	height: 100%;
 	width: 1px;
 }
 
-.guide_horizontal {
+.guide__horizontal {
 	height: 1px;
 	width: 100%;
 }

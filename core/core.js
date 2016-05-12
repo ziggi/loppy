@@ -1,4 +1,9 @@
-define(['core/widget/widget', 'css!core/core.css'], function(widget) {
+define(function(require, exports, module) {
+	// load modules
+	var widget = require('core/widget/widget');
+	require('css!core/core.css');
+
+	//
 	var widgets = Array.from(document.querySelectorAll('.widget'));
 
 	widgets.forEach(function(w) {
