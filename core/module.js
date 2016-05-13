@@ -1,5 +1,5 @@
-define(function () {
-	return function (widgetName) {
+define(function() {
+	return function(widgetName) {
 		var
 			currentWidget = null,
 			enabledWidgets = [];
