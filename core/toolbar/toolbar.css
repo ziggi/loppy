@@ -172,8 +172,8 @@
 	background-image: url('image/toolbar__param_item_page.svg');
 }
 
-#toolbar__param_item_header:before {
-	background-image: url('image/toolbar__param_item_header.svg');
+#toolbar__param_item_headline:before {
+	background-image: url('image/toolbar__param_item_headline.svg');
 }
 
 #toolbar__param_item_text:before {

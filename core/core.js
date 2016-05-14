@@ -5,6 +5,7 @@ define(function(require, exports, module) {
 
 	// load widgets
 	require('widget/button/button');
+	require('widget/headline/headline');
 
 	// add existing widgets
 	var widgets = Array.from(document.querySelectorAll('.widget'));

@@ -1,0 +1,13 @@
+.widget__headline {
+	word-wrap: break-word;
+	cursor: default;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
+}
+
+.widget__headline_selecting {
+	-webkit-user-select: text;
+	-moz-user-select: text;
+	user-select: text;
+}

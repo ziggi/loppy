@@ -8,20 +8,20 @@ define(function(require) {
 	var resize = require('core/resize/resize');
 	var guide = require('core/guide/guide');
 	var toolbar = require('core/toolbar/toolbar');
-	require('css!widget/button/button.css');
+	require('css!widget/headline/headline.css');
 
 	// resize params
 	var resizeParams = {
-		minWidth: 70,
-		minHeight: 30,
-		fontSizeRatio: 0.4,
-		type: 'all'
+		minWidth: 100,
+		minHeight: 50,
+		fontSizeRatio: 1.0,
+		type: 'side'
 	};
 
 	document.addEventListener('widgetAdd', function(event) {
 		var w = event.detail.widget;
 
-		if (w.type !== 'button') {
+		if (w.type !== 'headline') {
 			return;
 		}
 
@@ -42,18 +42,18 @@ define(function(require) {
 	document.addEventListener('clickWidgetAdd', function(event) {
 		var type = event.detail.type;
 
-		if (type !== 'button') {
+		if (type !== 'headline') {
 			return;
 		}
 
-		var element = loader('widget/button/button.html');
+		var element = loader('widget/headline/headline.html');
 
 		element.onload = function(text) {
 			globals.get('blockElement').insertAdjacentHTML('beforeend', text);
 
 			var w = {
 				element: globals.get('blockElement').lastElementChild.querySelector('.widget'),
-				type: 'button'
+				type: 'headline'
 			};
 
 			widget.add(w);
