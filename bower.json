@@ -19,6 +19,7 @@
     "vendor"
   ],
   "dependencies": {
-    "requirejs": "^2.1.22"
+    "requirejs": "^2.2.0",
+    "require-css": "^0.1.8"
   }
 }
