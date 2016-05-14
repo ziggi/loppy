@@ -12,18 +12,26 @@ define(function(require) {
 	resize.resize = function(w, params, resizeParams) {
 		// resize inner element
 		var resizeElement = w.element.querySelector('.widget__inner').firstChild.nextSibling;
-		resizeElement.style.top = params.top;
-		resizeElement.style.left = params.left;
-		resizeElement.style.height = params.height;
-		resizeElement.style.width = params.width;
-		resizeElement.style.fontSize = Math.min(parseInt(params.width) * resizeParams.fontSizeRatio / 2,
-			                                    parseInt(params.height) * resizeParams.fontSizeRatio) + 'px';
-
-		// resize borders
-		w.element.style.top = params.top;
-		w.element.style.left = params.left;
-		w.element.style.height = params.height;
-		w.element.style.width = params.width;
+		if (params.top !== undefined) {
+			resizeElement.style.top = params.top;
+			w.element.style.top = params.top;
+		}
+		if (params.left !== undefined) {
+			resizeElement.style.left = params.left;
+			w.element.style.left = params.left;
+		}
+		if (params.height !== undefined) {
+			resizeElement.style.height = params.height;
+			w.element.style.height = params.height;
+		}
+		if (params.width !== undefined) {
+			resizeElement.style.width = params.width;
+			w.element.style.width = params.width;
+		}
+		if (params.height !== undefined && params.width !== undefined && resizeParams.fontSizeRatio !== undefined) {
+			resizeElement.style.fontSize = Math.min(parseInt(params.width) * resizeParams.fontSizeRatio / 2,
+			                                        parseInt(params.height) * resizeParams.fontSizeRatio) + 'px';
+		}
 	}
 
 	//
@@ -78,7 +86,7 @@ define(function(require) {
 
 		var maxOffsetTop = document.documentElement.clientHeight;
 		var maxOffsetLeft = document.documentElement.clientWidth;
-		var newTop, newLeft, newHeight = currentHeight, newWidth = currentWidth;
+		var newTop, newLeft, newHeight, newWidth;
 
 		var controlType = resizeControl.getElementType(resizeControl.get());
 
@@ -142,6 +150,7 @@ define(function(require) {
 					newWidth = resizeParams.minWidth;
 				}
 			}
+
 		}
 
 		if (isHorizontalRight) {
@@ -157,6 +166,7 @@ define(function(require) {
 			} else if (newWidth > maxWidth) {
 				newWidth = maxWidth;
 			}
+
 		}
 
 		// resize

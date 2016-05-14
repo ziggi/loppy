@@ -13,8 +13,6 @@ define(function(require) {
 	// resize params
 	var resizeParams = {
 		minWidth: 100,
-		minHeight: 50,
-		fontSizeRatio: 1.0,
 		type: 'side'
 	};
 
@@ -63,8 +61,7 @@ define(function(require) {
 			resize.resize(w, {
 				top: '50%',
 				left: '50%',
-				width: resizeParams.minWidth + 'px',
-				height: resizeParams.minHeight + 'px'
+				width: resizeParams.minWidth + 'px'
 			}, resizeParams);
 		}
 
