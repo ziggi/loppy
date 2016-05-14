@@ -3,7 +3,10 @@ define(function(require, exports, module) {
 	var widget = require('core/widget/widget');
 	require('css!core/core.css');
 
-	//
+	// load widgets
+	require('widget/button/button');
+
+	// add existing widgets
 	var widgets = Array.from(document.querySelectorAll('.widget'));
 
 	widgets.forEach(function(w) {
@@ -15,6 +18,4 @@ define(function(require, exports, module) {
 			}
 		});
 	});
-
-	require(['widget/button/button']);
 });

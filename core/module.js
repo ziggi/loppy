@@ -1,8 +1,7 @@
 define(function() {
 	return function(widgetName) {
-		var
-			currentWidget = null,
-			enabledWidgets = [];
+		var currentWidget = null;
+		var enabledWidgets = [];
 
 		return {
 			set: function(widget) {

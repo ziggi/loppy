@@ -8,6 +8,11 @@ define(function() {
 		},
 		get: function(key) {
 			return globals[key];
+		},
+		setDefault: function(key, value) {
+			if (typeof(globals[key]) === 'undefined') {
+				globals[key] = value;
+			}
 		}
 	};
 });

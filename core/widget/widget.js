@@ -5,6 +5,13 @@ define(['helper/parents', 'css!core/widget/widget.css'], function(parents) {
 	return {
 		add: function(params) {
 			widgets.push(params);
+
+			var event = new CustomEvent('widgetAdd', {
+				detail: {
+					widget: params
+				}
+			});
+			document.dispatchEvent(event);
 		},
 		get: function(index) {
 			return widgets[index];

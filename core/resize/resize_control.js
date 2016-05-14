@@ -1,4 +1,6 @@
-define(['core/widget/widget', 'core/resize/resize'], function(widget, resize) {
+define(function(require) {
+	var widget = require('core/widget/widget');
+
 	const DEFAULT_TYPE = 'all';
 	const TYPES = {
 		all: ['n', 'e', 's', 'w', 'ne', 'se', 'sw', 'nw'],
@@ -8,8 +10,7 @@ define(['core/widget/widget', 'core/resize/resize'], function(widget, resize) {
 	};
 	const OFFSET_SIZE = 7;
 
-	var
-		currentElement = null;
+	var currentElement = null;
 
 	return {
 		set: function(element) {
