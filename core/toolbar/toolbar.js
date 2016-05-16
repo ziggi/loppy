@@ -33,6 +33,12 @@ define(function(require, exports, module) {
 	}
 
 	exports.toggle = function(element) {
+		var target = document.getElementById(element.dataset.target);
+
+		if (target === null) {
+			return;
+		}
+
 		if (element === activeItem) {
 			activeItem.classList.remove('toolbar__active');
 			activeItem = null;
@@ -46,12 +52,10 @@ define(function(require, exports, module) {
 			activeItem.classList.add('toolbar__active');
 		}
 
-		var target = document.getElementById(element.dataset.target);
-
 		if (target === activeParam) {
 			activeParam.style.display = 'none';
 			activeParam = null;
-		} else if (target !== null) {
+		} else {
 			if (activeParam !== null) {
 				activeParam.style.display = 'none';
 				activeParam = null;
