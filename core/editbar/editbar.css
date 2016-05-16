@@ -1,0 +1,71 @@
+.control__editbar {
+	display: none;
+	position: absolute;
+	z-index: 10000;
+	border: 1px solid #cfcfcf;
+	border-radius: 2px;
+	box-shadow: 0 1px 5px #d0d0d0;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
+}
+
+.control__editbar ul {
+	float: left;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.control__editbar ul > li {
+	float: left;
+	display: inline-block;
+	margin: 0;
+	border-right: 1px solid #cfcfcf;
+}
+
+.control__editbar ul > li:last-child {
+	border-right: 0;
+}
+
+.editbar__item {
+	min-width: 35px;
+	height: 30px;
+	cursor: pointer;
+	background-color: #fafafa;
+}
+
+.editbar__item:hover {
+	background-color: #efefef;
+}
+
+.editbar__item_text {
+	line-height: 30px;
+	padding: 0 5px;
+	font-family: Arial, sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+	text-align: center;
+}
+
+.editbar__item_icon {
+	background-repeat: no-repeat;
+	background-position: 50%;
+	background-size: 60%;
+}
+
+#editbar__item_arrangeup {
+	background-image: url('image/editbar__item_arrangeup.svg');
+}
+
+#editbar__item_arrangedown {
+	background-image: url('image/editbar__item_arrangedown.svg');
+}
+
+#editbar__item_duplicate {
+	background-image: url('image/editbar__item_duplicate.svg');
+}
+
+#editbar__item_delete {
+	background-image: url('image/editbar__item_delete.svg');
+}

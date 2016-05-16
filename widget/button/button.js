@@ -8,6 +8,8 @@ define(function(require) {
 	var resize = require('core/resize/resize');
 	var guide = require('core/guide/guide');
 	var toolbar = require('core/toolbar/toolbar');
+	var editbar = require('core/editbar/editbar');
+	var buttonEditbar = require('widget/button/editbar/editbar');
 	require('css!widget/button/button.css');
 
 	// resize params
@@ -29,6 +31,7 @@ define(function(require) {
 		resize.enable(w, resizeParams);
 		active.enable(w);
 		guide.enable(w);
+		editbar.enable(w, { edit: () => buttonEditbar.show(w) });
 
 		w.element.addEventListener('widgetActiveRemove', function() {
 			this.classList.remove('widget__active');
@@ -49,23 +52,24 @@ define(function(require) {
 		var element = loader('widget/button/button.html');
 
 		element.onload = function(text) {
-			globals.get('blockElement').insertAdjacentHTML('beforeend', text);
+			var blockElement = document.querySelector('.block__item');
+			blockElement.insertAdjacentHTML('beforeend', text);
 
 			var w = {
-				element: globals.get('blockElement').lastElementChild.querySelector('.widget'),
+				element: blockElement.querySelector('.widget:last-child'),
 				type: 'button'
 			};
 
 			widget.add(w);
 
-			active.set(w);
 			toolbar.close();
 			resize.resize(w, {
-				top: '50%',
-				left: '50%',
+				top: blockElement.offsetHeight / 2 + 'px',
+				left: blockElement.offsetWidth / 2 + 'px',
 				width: resizeParams.minWidth + 'px',
 				height: resizeParams.minHeight + 'px'
 			}, resizeParams);
+			active.set(w);
 		}
 
 		element.send();

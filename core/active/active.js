@@ -1,6 +1,7 @@
 define(function(require) {
 	// load modules
 	var widget = require('core/widget/widget');
+	var control = require('core/control/control');
 	var module = require('core/module');
 	require('css!core/active/active.css');
 
@@ -30,6 +31,10 @@ define(function(require) {
 	});
 
 	document.addEventListener('mousedown', function(event) {
+		if (control.isValid(event.target)) {
+			return;
+		}
+
 		if (widget.isValid(event.target)) {
 			return;
 		}

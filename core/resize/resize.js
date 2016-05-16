@@ -84,8 +84,8 @@ define(function(require) {
 		var currentHeight = parseInt(currentStyle.getPropertyValue('height'));
 		var currentWidth = parseInt(currentStyle.getPropertyValue('width'));
 
-		var maxOffsetTop = document.documentElement.clientHeight;
-		var maxOffsetLeft = document.documentElement.clientWidth;
+		var maxOffsetTop = document.body.clientHeight;
+		var maxOffsetLeft = document.body.clientWidth;
 		var newTop, newLeft, newHeight, newWidth;
 
 		var controlType = resizeControl.getElementType(resizeControl.get());
@@ -178,6 +178,7 @@ define(function(require) {
 		};
 
 		resize.resize(w, params, resizeParams);
+		resize.process(w);
 	});
 
 	document.addEventListener('mouseup', function(event) {

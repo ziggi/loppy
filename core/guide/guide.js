@@ -4,6 +4,7 @@ define(function(require) {
 	var module = require('core/module');
 	var globals = require('core/globals');
 	var loader = require('core/loader');
+	var scroll = require('helper/scrollpos');
 	require('css!core/guide/guide.css');
 
 	// create module
@@ -144,7 +145,7 @@ define(function(require) {
 		if (type === 'vertical') {
 			guideElement.vertical.style.left = pos + 'px';
 		} else if (type === 'horizontal') {
-			guideElement.horizontal.style.top = pos + 'px';
+			guideElement.horizontal.style.top = pos - scroll.getTop() + 'px';
 		}
 
 		guide.set(widget);

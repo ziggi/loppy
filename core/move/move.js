@@ -57,8 +57,8 @@ define(function(require) {
 		}
 
 		// vars
-		var maxOffsetTop = document.documentElement.clientHeight;
-		var maxOffsetLeft = document.documentElement.clientWidth;
+		var maxOffsetTop = document.body.clientHeight;
+		var maxOffsetLeft = document.body.clientWidth;
 
 		var newLeft = event.pageX - cursorOffsetLeft;
 		var newTop = event.pageY - cursorOffsetTop;
