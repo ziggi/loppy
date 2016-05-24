@@ -1,9 +1,8 @@
 define(function(require, exports, module) {
 	// load modules
 	var widget = require('core/widget/widget');
-	require('css!core/toolbar/toolbar.css');
 	var globals = require('core/globals');
-	var loader = require('core/loader');
+	require('css!core/toolbar/toolbar.css');
 
 	// set params
 	globals.set('offsetTop', 40);

@@ -20,6 +20,7 @@
   ],
   "dependencies": {
     "requirejs": "^2.2.0",
-    "require-css": "^0.1.8"
+    "require-css": "^0.1.8",
+    "text": "requirejs-text#^2.0.15"
   }
 }

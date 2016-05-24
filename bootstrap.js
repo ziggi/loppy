@@ -1,7 +1,8 @@
 require.config({
 	map: {
 		'*': {
-			'css': 'vendor/require-css/css'
+			'css': 'vendor/require-css/css',
+			'text': 'vendor/text/text'
 		}
 	}
 });
@@ -21,44 +22,25 @@ define(function(require) {
 	// load and insert html
 	require(['core/loader'], function(loader) {
 		// control part
-		var control = loader('template/control.html');
-		var toolbar = loader('core/toolbar/toolbar.html');
+		require(
+			[
+				'text!template/control.html',
+				'text!core/toolbar/toolbar.html',
+				'text!template/block.html',
+				'text!saved.html',
+			],
+			function(controlHtml, toolbarHtml, blockHtml, savedHtml) {
+				container.insertAdjacentHTML('beforeend', controlHtml);
+				globals.set('controlElement', document.querySelector('div.control'));
 
-		control.onload = function(text) {
-			container.insertAdjacentHTML('beforeend', text);
-			globals.set('controlElement', document.querySelector('div.control'));
+				container.insertAdjacentHTML('beforeend', blockHtml);
+				globals.set('blockElement', document.querySelector('div.block'));
 
-			// load other parts
-			block.send();
-			toolbar.send();
-		}
+				globals.get('controlElement').insertAdjacentHTML('beforeend', toolbarHtml);
+				globals.get('blockElement').insertAdjacentHTML('beforeend', savedHtml);
 
-		toolbar.onload = function(text) {
-			globals.get('controlElement').insertAdjacentHTML('beforeend', text);
-
-			// load toolbar
-			require(['core/toolbar/toolbar']);
-		}
-
-		control.send();
-
-		// block part
-		var block = loader('template/block.html');
-		var saved = loader('saved.html');
-
-		block.onload = function(text) {
-			container.insertAdjacentHTML('beforeend', text);
-			globals.set('blockElement', document.querySelector('div.block'));
-
-			// load saved data
-			saved.send();
-		}
-
-		saved.onload = function(text) {
-			globals.get('blockElement').insertAdjacentHTML('beforeend', text);
-
-			// load core
-			require(['core/core']);
-		}
+				require(['core/core']);
+			}
+		);
 	});
 });

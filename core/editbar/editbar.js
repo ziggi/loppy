@@ -3,7 +3,6 @@ define(function(require) {
 	var widget = require('core/widget/widget');
 	var module = require('core/module');
 	var globals = require('core/globals');
-	var loader = require('core/loader');
 	var scroll = require('helper/scrollpos');
 	require('css!core/editbar/editbar.css');
 	var action = {
@@ -21,10 +20,8 @@ define(function(require) {
 	var resizeOffset = require('core/resize/resize_control').getOffset();
 
 	// load and insert html
-	var editbarLoader = loader('core/editbar/editbar.html');
-
-	editbarLoader.onload = function(text) {
-		globals.get('controlElement').insertAdjacentHTML('beforeend', text);
+	require(['text!core/editbar/editbar.html'], function(html) {
+		globals.get('controlElement').insertAdjacentHTML('beforeend', html);
 
 		editbarElement = document.querySelector('.control__editbar');
 		editbarItems = Array.from(document.querySelectorAll('.editbar__item'));
@@ -45,9 +42,7 @@ define(function(require) {
 				}
 			});
 		});
-	}
-
-	editbarLoader.send();
+	});
 
 	// editbar functions
 	editbar.setPos = function(widgetElement) {

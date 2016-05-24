@@ -3,7 +3,6 @@ define(function(require) {
 	var widget = require('core/widget/widget');
 	var module = require('core/module');
 	var globals = require('core/globals');
-	var loader = require('core/loader');
 	var scroll = require('helper/scrollpos');
 	require('css!core/guide/guide.css');
 
@@ -34,17 +33,13 @@ define(function(require) {
 	};
 
 	// load and insert html
-	var guideLoader = loader('core/guide/guide.html');
-
-	guideLoader.onload = function(text) {
-		globals.get('controlElement').insertAdjacentHTML('beforeend', text);
+	require(['text!core/guide/guide.html'], function(html) {
+		globals.get('controlElement').insertAdjacentHTML('beforeend', html);
 
 		anchorTypes.forEach(function(type) {
 			guideElement[type] = document.querySelector('.guide__' + type);
 		});
-	}
-
-	guideLoader.send();
+	});
 
 	// add event handlers to widgets
 	document.addEventListener('widgetAdd', function(event) {

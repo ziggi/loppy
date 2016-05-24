@@ -1,7 +1,6 @@
 define(function(require) {
 	// load modules
 	var widget = require('core/widget/widget');
-	var loader = require('core/loader');
 	var globals = require('core/globals');
 	var move = require('core/move/move');
 	var active = require('core/active/active');
@@ -49,11 +48,9 @@ define(function(require) {
 			return;
 		}
 
-		var element = loader('widget/button/button.html');
-
-		element.onload = function(text) {
+		require(['text!widget/button/button.html'], function(html) {
 			var blockElement = document.querySelector('.block__item');
-			blockElement.insertAdjacentHTML('beforeend', text);
+			blockElement.insertAdjacentHTML('beforeend', html);
 
 			var w = {
 				element: blockElement.querySelector('.widget:last-child'),
@@ -70,8 +67,6 @@ define(function(require) {
 				height: resizeParams.minHeight + 'px'
 			}, resizeParams);
 			active.set(w);
-		}
-
-		element.send();
+		});
 	});
 });
