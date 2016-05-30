@@ -49,7 +49,7 @@
 .toolbar__param {
 	display: none;
 	position: fixed;
-	z-index: 10100;
+	z-index: 11100;
 	left: 0;
 	top: 41px;
 	padding: 5px;
