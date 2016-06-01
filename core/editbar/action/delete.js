@@ -1,8 +1,9 @@
-define(function() {
+define(function(require) {
+	var widget = require('core/widget/widget');
+
 	return {
 		run: function(w, editbar) {
-			var element = w.element;
-			element.parentNode.removeChild(element);
+			widget.remove(w);
 			editbar.hide();
 		}
 	}

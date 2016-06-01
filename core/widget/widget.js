@@ -13,6 +13,22 @@ define(['helper/parents', 'css!core/widget/widget.css'], function(parents) {
 			});
 			document.dispatchEvent(event);
 		},
+		remove: function(w) {
+			var index = widgets.indexOf(w);
+			if (index === -1) {
+				return false;
+			}
+
+			widgets.splice(index, 1);
+
+			var event = new CustomEvent('widgetRemove', {
+				detail: {
+					widget: w
+				}
+			});
+			document.dispatchEvent(event);
+			return true;
+		},
 		get: function(index) {
 			return widgets[index];
 		},

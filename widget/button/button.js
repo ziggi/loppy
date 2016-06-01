@@ -41,6 +41,22 @@ define(function(require) {
 		});
 	});
 
+	document.addEventListener('widgetRemove', function(event) {
+		var w = event.detail.widget;
+
+		if (w.type !== 'button') {
+			return;
+		}
+
+		move.disable(w);
+		resize.disable(w);
+		active.disable(w);
+		guide.disable(w);
+		editbar.disable(w);
+
+		w.element.parentNode.removeChild(w.element);
+	});
+
 	document.addEventListener('clickWidgetAdd', function(event) {
 		var type = event.detail.type;
 
