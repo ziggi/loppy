@@ -61,10 +61,10 @@ define(function(require) {
 
 			toolbar.close();
 			resize.resize(w, {
-				top: blockElement.offsetHeight / 2 + 'px',
-				left: blockElement.offsetWidth / 2 + 'px',
-				width: resizeParams.minWidth + 'px',
-				height: resizeParams.minHeight + 'px'
+				top: blockElement.offsetHeight / 2,
+				left: blockElement.offsetWidth / 2,
+				width: resizeParams.minWidth,
+				height: resizeParams.minHeight
 			}, resizeParams);
 			active.set(w);
 		});

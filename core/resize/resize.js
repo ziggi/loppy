@@ -12,25 +12,35 @@ define(function(require) {
 	resize.resize = function(w, params, resizeParams) {
 		// resize inner element
 		var resizeElement = w.element.querySelector('.widget__inner').firstChild.nextSibling;
-		if (params.top !== undefined) {
-			resizeElement.style.top = params.top;
-			w.element.style.top = params.top;
+
+		for (var key in params) {
+			if (!params.hasOwnProperty(key)) {
+				continue;
+			}
+
+			if (params[key] === undefined) {
+				continue;
+			}
+
+			resizeElement.style[key] = params[key] + 'px';
+			w.element.style[key] = params[key] + 'px';
 		}
-		if (params.left !== undefined) {
-			resizeElement.style.left = params.left;
-			w.element.style.left = params.left;
-		}
-		if (params.height !== undefined) {
-			resizeElement.style.height = params.height;
-			w.element.style.height = params.height;
-		}
-		if (params.width !== undefined) {
-			resizeElement.style.width = params.width;
-			w.element.style.width = params.width;
-		}
-		if (params.height !== undefined && params.width !== undefined && resizeParams.fontSizeRatio !== undefined) {
-			resizeElement.style.fontSize = Math.min(parseInt(params.width) * resizeParams.fontSizeRatio / 2,
-			                                        parseInt(params.height) * resizeParams.fontSizeRatio) + 'px';
+
+		if (resizeParams.fontSizeRatio !== undefined) {
+			var fontRatio = resizeParams.fontSizeRatio;
+			var height = params.height;
+			var width = params.width;
+
+			if (height === undefined) {
+				height = parseInt(w.element.style.height);
+			}
+
+			if (width === undefined) {
+				width = parseInt(w.element.style.width);
+			}
+
+			resizeElement.style.fontSize = Math.min(width * fontRatio / 2,
+			                                        height * fontRatio) + 'px';
 		}
 	}
 
@@ -80,9 +90,8 @@ define(function(require) {
 		var resizeOffset = resizeControl.getOffset();
 		var resizeParams = resize.getParams(w);
 
-		var currentStyle = window.getComputedStyle(w.element, null);
-		var currentHeight = parseInt(currentStyle.getPropertyValue('height'));
-		var currentWidth = parseInt(currentStyle.getPropertyValue('width'));
+		var currentHeight = parseInt(w.element.style.height);
+		var currentWidth = parseInt(w.element.style.width);
 
 		var maxOffsetTop = document.body.clientHeight;
 		var maxOffsetLeft = document.body.clientWidth;
@@ -171,10 +180,10 @@ define(function(require) {
 
 		// resize
 		var params = {
-			top: newTop + 'px',
-			left: newLeft + 'px',
-			height: newHeight + 'px',
-			width: newWidth + 'px'
+			top: newTop,
+			left: newLeft,
+			height: newHeight,
+			width: newWidth
 		};
 
 		resize.resize(w, params, resizeParams);

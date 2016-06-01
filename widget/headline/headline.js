@@ -59,9 +59,9 @@ define(function(require) {
 
 			toolbar.close();
 			resize.resize(w, {
-				top: blockElement.offsetHeight / 2 + 'px',
-				left: blockElement.offsetWidth / 2 + 'px',
-				width: resizeParams.minWidth + 'px'
+				top: blockElement.offsetHeight / 2,
+				left: blockElement.offsetWidth / 2,
+				width: resizeParams.minWidth
 			}, resizeParams);
 			active.set(w);
 		});
