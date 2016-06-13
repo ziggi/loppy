@@ -18,9 +18,7 @@ define(function(require) {
 	var cursorOffsetLeft = 0;
 	var cursorOffsetTop = 0;
 
-	document.addEventListener('widgetAdd', function(event) {
-		var w = event.detail.widget;
-
+	widget.on('add', function(w) {
 		w.element.addEventListener('mousedown', function(event) {
 			var isNotLeftClick = event.which !== 1;
 			if (isNotLeftClick) {

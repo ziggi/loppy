@@ -10,6 +10,7 @@ define(function(require, exports, module) {
 	//
 	var activeItem = null;
 	var activeParam = null;
+	var listeners = {};
 
 	exports.getActiveItem = function() {
 		return activeItem;
@@ -65,6 +66,41 @@ define(function(require, exports, module) {
 		}
 	}
 
+	// event system
+	exports.on = function(type, func) {
+		if (!listeners.hasOwnProperty(type)) {
+			listeners[type] = [];
+		}
+
+		listeners[type].push(func);
+	};
+
+	exports.off = function(type, func) {
+		if (!listeners.hasOwnProperty(type)) {
+			return 0;
+		}
+
+		var index = listeners[type].indexOf(func);
+		if (index === -1) {
+			return 0;
+		}
+
+		listeners[type].splice(index, 1);
+		return 1;
+	};
+
+	exports.trigger = function(type, args) {
+		if (!listeners.hasOwnProperty(type)) {
+			return 0;
+		}
+
+		listeners[type].forEach(function(func, pos) {
+			func(args);
+		});
+		return 1;
+	};
+
+	// process
 	Array.from(document.querySelectorAll('.toolbar__item')).forEach(function(item) {
 		if (typeof(item.dataset.target) === undefined) {
 			return;
@@ -81,12 +117,7 @@ define(function(require, exports, module) {
 		item.addEventListener('click', function(event) {
 			var widgetType = item.dataset.widget;
 
-			var event = new CustomEvent('clickWidgetAdd', {
-				detail: {
-					type: widgetType
-				}
-			});
-			document.dispatchEvent(event);
+			exports.trigger('add', widgetType);
 		});
 	});
 });

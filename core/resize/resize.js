@@ -4,6 +4,7 @@ define(function(require) {
 	var module = require('core/module');
 	var globals = require('core/globals');
 	var resizeControl = require('core/resize/resize_control');
+	var active = require('core/active/active');
 	require('css!core/resize/resize.css');
 
 	//
@@ -45,10 +46,8 @@ define(function(require) {
 	}
 
 	//
-	document.addEventListener('widgetAdd', function(event) {
-		var w = event.detail.widget;
-
-		w.element.addEventListener('widgetActiveSet', function(event) {
+	widget.on('add', function(w) {
+		active.on(w, 'set', function() {
 			if (!resize.isEnabled(w)) {
 				return;
 			}
@@ -72,8 +71,8 @@ define(function(require) {
 			});
 		});
 
-		w.element.addEventListener('widgetActiveRemove', function() {
-			resizeControl.getElements(this).forEach(function(resizeElement) {
+		active.on(w, 'remove', function() {
+			resizeControl.getElements(w.element).forEach(function(resizeElement) {
 				resizeElement.remove();
 			});
 

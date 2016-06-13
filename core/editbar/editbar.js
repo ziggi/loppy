@@ -5,6 +5,9 @@ define(function(require) {
 	var globals = require('core/globals');
 	var scroll = require('helper/scrollpos');
 	require('css!core/editbar/editbar.css');
+	var active = require('core/active/active');
+	var move = require('core/move/move');
+	var resize = require('core/resize/resize');
 	var action = {
 		arrangedown: require('core/editbar/action/arrangedown'),
 		arrangeup: require('core/editbar/action/arrangeup'),
@@ -77,30 +80,28 @@ define(function(require) {
 	}
 
 	//
-	document.addEventListener('widgetAdd', function(event) {
-		var w = event.detail.widget;
-
-		w.element.addEventListener('widgetActiveSet', function(event) {
+	widget.on('add', function(w) {
+		active.on(w, 'set', function() {
 			if (!editbar.isEnabled(w)) {
 				return;
 			}
 
 			editbar.set(w);
 			editbar.show();
-			editbar.setPos(this);
+			editbar.setPos(w.element);
 		});
 
-		w.element.addEventListener('widgetActiveRemove', function() {
+		active.on(w, 'remove', function() {
 			editbar.hide();
 			editbar.remove(w);
 		});
 
-		w.element.addEventListener('widgetMoveProcess', function() {
-			editbar.setPos(this);
+		move.on(w, 'process', function() {
+			editbar.setPos(w.element);
 		});
 
-		w.element.addEventListener('widgetResizeProcess', function() {
-			editbar.setPos(this);
+		resize.on(w, 'process', function() {
+			editbar.setPos(w.element);
 		});
 	});
 

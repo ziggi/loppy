@@ -19,9 +19,7 @@ define(function(require) {
 		type: 'all'
 	};
 
-	document.addEventListener('widgetAdd', function(event) {
-		var w = event.detail.widget;
-
+	widget.on('add', function(w) {
 		if (w.type !== 'button') {
 			return;
 		}
@@ -32,18 +30,16 @@ define(function(require) {
 		guide.enable(w);
 		editbar.enable(w, { edit: () => buttonEditbar.show(w) });
 
-		w.element.addEventListener('widgetActiveRemove', function() {
-			this.classList.remove('widget__active');
+		active.on(w, 'set', function() {
+			w.element.classList.add('widget__active');
 		});
 
-		w.element.addEventListener('widgetActiveSet', function() {
-			this.classList.add('widget__active');
+		active.on(w, 'remove', function() {
+			w.element.classList.remove('widget__active');
 		});
 	});
 
-	document.addEventListener('widgetRemove', function(event) {
-		var w = event.detail.widget;
-
+	widget.on('remove', function(w) {
 		if (w.type !== 'button') {
 			return;
 		}
@@ -57,9 +53,7 @@ define(function(require) {
 		w.element.parentNode.removeChild(w.element);
 	});
 
-	document.addEventListener('clickWidgetAdd', function(event) {
-		var type = event.detail.type;
-
+	toolbar.on('add', function(type) {
 		if (type !== 'button') {
 			return;
 		}

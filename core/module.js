@@ -2,6 +2,7 @@ define(function() {
 	return function(widgetName) {
 		var currentWidget = null;
 		var enabledWidgets = [];
+		var listeners = {};
 
 		return {
 			set: function(widget) {
@@ -13,7 +14,7 @@ define(function() {
 					this.remove();
 				}
 
-				widget.element.dispatchEvent(new Event('widget' + widgetName + 'Set'));
+				this.trigger(widget, 'set');
 				currentWidget = widget;
 			},
 			get: function() {
@@ -27,7 +28,7 @@ define(function() {
 					return;
 				}
 
-				currentWidget.element.dispatchEvent(new Event('widget' + widgetName + 'Remove'));
+				this.trigger(currentWidget, 'remove');
 				currentWidget = null;
 			},
 			process: function() {
@@ -35,7 +36,7 @@ define(function() {
 					return;
 				}
 
-				currentWidget.element.dispatchEvent(new Event('widget' + widgetName + 'Process'));
+				this.trigger(currentWidget, 'process');
 			},
 			// activable
 			enable: function(widget, params) {
@@ -82,6 +83,46 @@ define(function() {
 				});
 
 				return param;
+			},
+			// event system
+			on: function(w, type, func) {
+				if (!listeners.hasOwnProperty(type)) {
+					listeners[type] = [];
+				}
+
+				listeners[type].push({
+					widget: w,
+					listener: func
+				});
+			},
+			off: function(w, type, func) {
+				if (!listeners.hasOwnProperty(type)) {
+					return 0;
+				}
+
+				var index = listeners[type].indexOf({
+					widget: w,
+					listener: func
+				});
+
+				if (index === -1) {
+					return 0;
+				}
+
+				listeners[type].splice(index, 1);
+				return 1;
+			},
+			trigger: function(w, type, args) {
+				if (!listeners.hasOwnProperty(type)) {
+					return 0;
+				}
+
+				listeners[type].forEach(function(elem) {
+					if (w === elem.widget) {
+						elem.listener(args);
+					}
+				});
+				return 1;
 			}
 		};
 	};

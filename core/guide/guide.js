@@ -4,6 +4,7 @@ define(function(require) {
 	var module = require('core/module');
 	var globals = require('core/globals');
 	var scroll = require('helper/scrollpos');
+	var move = require('core/move/move');
 	require('css!core/guide/guide.css');
 
 	// create module
@@ -42,10 +43,8 @@ define(function(require) {
 	});
 
 	// add event handlers to widgets
-	document.addEventListener('widgetAdd', function(event) {
-		var w = event.detail.widget;
-
-		w.element.addEventListener('widgetMoveSet', function(event) {
+	widget.on('add', function(w) {
+		move.on(w, 'set', function() {
 			if (!guide.isEnabled(w)) {
 				return;
 			}
@@ -73,7 +72,7 @@ define(function(require) {
 			});
 		});
 
-		w.element.addEventListener('widgetMoveRemove', function(event) {
+		move.on(w, 'remove', function() {
 			if (!guide.isEnabled(w)) {
 				return;
 			}
@@ -84,7 +83,7 @@ define(function(require) {
 			});
 		});
 
-		w.element.addEventListener('widgetMoveProcess', function(event) {
+		move.on(w, 'process', function() {
 			if (!guide.isEnabled(w)) {
 				return;
 			}

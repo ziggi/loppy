@@ -1,17 +1,12 @@
 define(['helper/parents', 'css!core/widget/widget.css'], function(parents) {
-	var
-		widgets = [];
+	var widgets = [];
+	var listeners = {};
 
 	return {
 		add: function(params) {
 			widgets.push(params);
 
-			var event = new CustomEvent('widgetAdd', {
-				detail: {
-					widget: params
-				}
-			});
-			document.dispatchEvent(event);
+			this.trigger('add', params);
 		},
 		remove: function(w) {
 			var index = widgets.indexOf(w);
@@ -21,12 +16,7 @@ define(['helper/parents', 'css!core/widget/widget.css'], function(parents) {
 
 			widgets.splice(index, 1);
 
-			var event = new CustomEvent('widgetRemove', {
-				detail: {
-					widget: w
-				}
-			});
-			document.dispatchEvent(event);
+			this.trigger('remove', w);
 			return true;
 		},
 		get: function(index) {
@@ -83,6 +73,37 @@ define(['helper/parents', 'css!core/widget/widget.css'], function(parents) {
 			});
 
 			return result;
+		},
+		// event system
+		on: function(type, func) {
+			if (!listeners.hasOwnProperty(type)) {
+				listeners[type] = [];
+			}
+
+			listeners[type].push(func);
+		},
+		off: function(type, func) {
+			if (!listeners.hasOwnProperty(type)) {
+				return 0;
+			}
+
+			var index = listeners[type].indexOf(func);
+			if (index === -1) {
+				return 0;
+			}
+
+			listeners[type].splice(index, 1);
+			return 1;
+		},
+		trigger: function(type, args) {
+			if (!listeners.hasOwnProperty(type)) {
+				return 0;
+			}
+
+			listeners[type].forEach(function(func, pos) {
+				func(args);
+			});
+			return 1;
 		}
 	};
 });
