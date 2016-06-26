@@ -12,6 +12,32 @@ define(function(require, exports, module) {
 	var activeParam = null;
 	var listeners = {};
 
+	// load process
+	require(['text!core/toolbar/toolbar.html'], function(html) {
+		globals.get('controlElement').insertAdjacentHTML('beforeend', html);
+
+		Array.from(document.querySelectorAll('.toolbar__item')).forEach(function(item) {
+			if (typeof(item.dataset.target) === undefined) {
+				return;
+			}
+
+			item.addEventListener('click', function(event) {
+				exports.toggle(this);
+			});
+		});
+
+		var addItems = Array.from(document.querySelectorAll('#toolbar__param_add .toolbar__param_item'));
+
+		addItems.forEach(function(item) {
+			item.addEventListener('click', function(event) {
+				var widgetType = item.dataset.widget;
+
+				exports.trigger('add', widgetType);
+			});
+		});
+	});
+
+	// functions
 	exports.getActiveItem = function() {
 		return activeItem;
 	}
@@ -99,25 +125,4 @@ define(function(require, exports, module) {
 		});
 		return 1;
 	};
-
-	// process
-	Array.from(document.querySelectorAll('.toolbar__item')).forEach(function(item) {
-		if (typeof(item.dataset.target) === undefined) {
-			return;
-		}
-
-		item.addEventListener('click', function(event) {
-			exports.toggle(this);
-		});
-	});
-
-	var addItems = Array.from(document.querySelectorAll('#toolbar__param_add .toolbar__param_item'));
-
-	addItems.forEach(function(item) {
-		item.addEventListener('click', function(event) {
-			var widgetType = item.dataset.widget;
-
-			exports.trigger('add', widgetType);
-		});
-	});
 });

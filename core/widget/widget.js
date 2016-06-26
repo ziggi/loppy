@@ -1,4 +1,7 @@
-define(['helper/parents', 'css!core/widget/widget.css'], function(parents) {
+define(function(require) {
+	var parents = require('helper/parents');
+	require('css!core/widget/widget.css');
+
 	var widgets = [];
 	var listeners = {};
 

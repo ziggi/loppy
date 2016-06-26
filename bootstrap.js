@@ -23,18 +23,16 @@ define(function(require) {
 	require(
 		[
 			'text!template/control.html',
-			'text!core/toolbar/toolbar.html',
 			'text!template/block.html',
 			'text!saved.html',
 		],
-		function(controlHtml, toolbarHtml, blockHtml, savedHtml) {
+		function(controlHtml, blockHtml, savedHtml) {
 			container.insertAdjacentHTML('beforeend', controlHtml);
 			globals.set('controlElement', document.querySelector('div.control'));
 
 			container.insertAdjacentHTML('beforeend', blockHtml);
 			globals.set('blockElement', document.querySelector('div.block'));
 
-			globals.get('controlElement').insertAdjacentHTML('beforeend', toolbarHtml);
 			globals.get('blockElement').insertAdjacentHTML('beforeend', savedHtml);
 
 			require(['core/core']);
