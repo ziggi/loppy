@@ -1,5 +1,6 @@
 define(function(require, exports, module) {
 	// load modules
+	require('core/blockbar/blockbar');
 	var widget = require('core/widget/widget');
 	require('css!core/core.css');
 
