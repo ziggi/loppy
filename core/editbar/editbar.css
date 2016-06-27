@@ -40,7 +40,9 @@
 }
 
 .editbar__item_text {
-	line-height: 30px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	padding: 0 5px;
 	font-family: Arial, sans-serif;
 	font-size: 14px;
