@@ -1,0 +1,76 @@
+.block__item {
+	border-bottom: 1px dashed #EF9A9A;
+}
+
+.blockbar {
+	display: none;
+	position: absolute;
+	z-index: 10000;
+	box-sizing: border-box;
+	margin-top: -29px;
+	margin-left: 2px;
+	border: 1px solid #cfcfcf;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
+}
+
+.blockbar ul {
+	float: left;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.blockbar ul > li {
+	float: left;
+	display: inline-block;
+	margin: 0;
+	border-right: 1px solid #cfcfcf;
+}
+
+.blockbar ul > li:last-child {
+	border-right: 0;
+}
+
+.blockbar__item {
+	min-width: 25px;
+	height: 25px;
+	cursor: pointer;
+	background-color: #fafafa;
+}
+
+.blockbar__item:hover {
+	background-color: #efefef;
+}
+
+.blockbar__item_text {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 0 5px;
+	font-family: Arial, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	text-align: center;
+}
+
+.blockbar__item_icon {
+	background-repeat: no-repeat;
+	background-position: 50%;
+	background-size: 80%;
+}
+
+#blockbar__item_move {
+	cursor: move;
+	background-image: url('image/blockbar__item_move.svg');
+}
+
+#blockbar__item_resize {
+	cursor: ns-resize;
+	background-image: url('image/blockbar__item_resize.svg');
+}
+
+#blockbar__item_delete {
+	background-image: url('image/blockbar__item_delete.svg');
+}
