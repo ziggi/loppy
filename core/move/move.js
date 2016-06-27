@@ -36,16 +36,16 @@ define(function(require) {
 			cursorOffsetLeft = event.pageX - w.element.offsetLeft;
 			cursorOffsetTop = event.pageY - w.element.offsetTop;
 
-			move.set(w);
+			move.set(w, event);
 		});
 	});
 
-	document.addEventListener('mouseup', function() {
+	document.addEventListener('mouseup', function(event) {
 		if (move.get() === null) {
 			return;
 		}
 
-		move.remove();
+		move.remove(event);
 	});
 
 	document.addEventListener('mousemove', function(event) {
@@ -87,7 +87,7 @@ define(function(require) {
 		w.element.style.top = newTop + 'px';
 
 		// call event
-		move.process(w);
+		move.process(w, event);
 	});
 
 	return move;

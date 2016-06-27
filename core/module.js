@@ -5,7 +5,7 @@ define(function() {
 		var listeners = {};
 
 		return {
-			set: function(widget) {
+			set: function(widget, args) {
 				if (currentWidget === widget) {
 					return;
 				}
@@ -14,7 +14,7 @@ define(function() {
 					this.remove();
 				}
 
-				this.trigger(widget, 'set');
+				this.trigger(widget, 'set', args);
 				currentWidget = widget;
 			},
 			get: function() {
@@ -23,20 +23,20 @@ define(function() {
 			isValid: function(widget) {
 				return currentWidget == widget;
 			},
-			remove: function() {
+			remove: function(args) {
 				if (currentWidget === null) {
 					return;
 				}
 
-				this.trigger(currentWidget, 'remove');
+				this.trigger(currentWidget, 'remove', args);
 				currentWidget = null;
 			},
-			process: function() {
+			process: function(args) {
 				if (currentWidget === null) {
 					return;
 				}
 
-				this.trigger(currentWidget, 'process');
+				this.trigger(currentWidget, 'process', args);
 			},
 			// activable
 			enable: function(widget, params) {
