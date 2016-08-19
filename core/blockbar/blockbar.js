@@ -6,6 +6,7 @@ define(function(require, exports, module) {
 	var parents = require('helper/parents');
 	var move = require('core/move/move');
 	require('css!core/blockbar/blockbar.css');
+	var scroll = require('helper/scrollpos');
 
 	// create variables
 	var blockbarElement = null;
@@ -51,7 +52,9 @@ define(function(require, exports, module) {
 		var blocks = Array.from(document.querySelectorAll('.block__item'));
 
 		blocks.forEach(function(block) {
-			if (y > block.offsetTop && y < block.offsetTop + block.offsetHeight) {
+			var borderTop = block.offsetTop - scroll.getTop();
+
+			if (y > borderTop && y < borderTop + block.offsetHeight) {
 				result = block;
 				return;
 			}
