@@ -1,7 +1,9 @@
 define(function() {
 	return {
 		run: function(w) {
-			w.element.style.zIndex--;
+			if (w.element.style.zIndex > 0) {
+				w.element.style.zIndex--;
+			}
 		}
 	}
 });
